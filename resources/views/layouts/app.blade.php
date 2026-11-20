@@ -18,11 +18,11 @@
         <link rel="stylesheet" href="{{ asset('css/buku.css') }}">
     </head>
     <body class="font-sans antialiased bg-[#f1f5f9] text-slate-800">
-        <div class="min-h-screen flex flex-col">
+        <div x-data="{ sidebarOpen: true }" class="min-h-screen flex flex-col">
             @include('layouts.navigation')
 
             <!-- Wrapper Konten Utama di Sebelah Kanan Sidebar -->
-            <div class="flex-1 flex flex-col md:pl-64">
+            <div :class="sidebarOpen ? 'md:pl-64' : 'md:pl-20'" class="flex-1 flex flex-col transition-all duration-200">
                 <!-- Flash Message Notification -->
                 @if(session('success'))
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
