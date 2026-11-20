@@ -79,5 +79,16 @@
                 </footer>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('a[href*="/api/buku"], a[href*="/api/dashboard"]').forEach(function (link) {
+                    const href = link.getAttribute('href');
+                    if (href) {
+                        link.setAttribute('href', href.replace('/api/buku', '/buku').replace('/api/dashboard', '/dashboard'));
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
