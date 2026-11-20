@@ -2,6 +2,12 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <div class="mb-4 text-center">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            Perpustakaan Digital - 250441100137
+        </h2>
+    </div>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
