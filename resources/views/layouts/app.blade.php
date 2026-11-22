@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="{{ asset('css/buku.css') }}">
     </head>
     <body class="font-sans antialiased bg-[#f1f5f9] text-slate-800">
-        <div x-data="{ sidebarOpen: true }" class="min-h-screen flex flex-col">
+        <div x-data="{ open: false, sidebarOpen: false }" class="min-h-screen flex flex-col">
             @include('layouts.navigation')
 
             <!-- Wrapper Konten Utama di Sebelah Kanan Sidebar -->

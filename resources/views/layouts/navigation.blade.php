@@ -9,8 +9,11 @@
     $isLaporanActive = request()->routeIs('laporan.index');
 @endphp
 
-<div>
-    <!-- Sidebar Desktop di Pinggir Kiri (Bisa Buka-Tutup via sidebarOpen) -->
+<div x-data="{
+    open: false,
+    sidebarOpen: (typeof window.sidebarOpen !== 'undefined') ? window.sidebarOpen : false
+}" x-init="if (typeof $data.sidebarOpen !== 'boolean') { $data.sidebarOpen = false; }">
+    <!-- Sidebar Desktop di Pinggir Kiri (Tertutup Otomatis Saat Awal Dimuat) -->
     <aside
         :class="sidebarOpen ? 'md:w-64' : 'md:w-20'"
         class="hidden md:flex md:flex-col md:fixed md:inset-y-0 md:left-0 z-30 bg-[#06215c] text-white border-r border-[#04153b] shadow-xl transition-all duration-200"
