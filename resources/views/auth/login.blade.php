@@ -46,7 +46,7 @@
                     Autentikasi Sistem
                 </span>
                 <h2 class="mt-1 text-2xl font-bold text-slate-900">
-                    Masuk ke Akun
+                    Masuk ke Akun &middot; NIM 250441100137
                 </h2>
                 <p class="mt-1 text-sm text-slate-500">
                     Gunakan email dan password terdaftar untuk masuk.
