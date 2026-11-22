@@ -16,9 +16,17 @@
         class="hidden md:flex md:flex-col md:fixed md:inset-y-0 md:left-0 z-30 bg-[#06215c] text-white border-r border-[#04153b] shadow-xl transition-all duration-200"
     >
         <!-- Brand & Tombol Buka/Tutup -->
-        <div class="h-16 px-3.5 flex items-center justify-between gap-2 bg-[#04153b] border-b border-white/10">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 min-w-0 overflow-hidden">
-                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-400/30">
+        <div
+            :class="sidebarOpen ? 'px-4 justify-between' : 'px-2 justify-center'"
+            class="h-16 flex items-center gap-2 bg-[#04153b] border-b border-white/10 transition-all duration-200"
+        >
+            <a
+                href="{{ route('dashboard') }}"
+                title="Perpustakaan Digital · 250441100137"
+                :class="sidebarOpen ? 'gap-2.5' : 'justify-center'"
+                class="flex items-center min-w-0 overflow-hidden"
+            >
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-400/35">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                     </svg>
@@ -34,12 +42,13 @@
             </a>
 
             <button
+                x-show="sidebarOpen"
                 type="button"
-                @click="sidebarOpen = ! sidebarOpen"
-                :title="sidebarOpen ? 'Tutup Sidebar' : 'Buka Sidebar'"
+                @click="sidebarOpen = false"
+                title="Tutup Sidebar"
                 class="shrink-0 inline-flex items-center justify-center p-1.5 rounded-lg text-blue-100/80 hover:text-white hover:bg-white/10 focus:outline-none transition"
             >
-                <svg :class="sidebarOpen ? '' : 'rotate-180'" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
@@ -181,7 +190,7 @@
         </div>
     </aside>
 
-    <!-- Topbar Ringkas di Atas Area Konten (Tombol Buka/Tutup + Mobile Menu + Badge Role + Profil) -->
+    <!-- Topbar Ringkas di Atas Area Konten -->
     <div class="h-16 bg-white border-b-4 border-b-emerald-500 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 shadow-2xs">
         <div class="flex items-center gap-3">
             <!-- Tombol Buka/Tutup Sidebar di Desktop -->
