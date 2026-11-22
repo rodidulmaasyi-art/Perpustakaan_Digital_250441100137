@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Ketika membuka root URL (http://127.0.0.1:8000/), langsung arahkan ke halaman login
+// Ketika membuka root URL, langsung arahkan ke halaman login
 Route::redirect('/', '/login');
 
 // Route Dashboard Utama (Redirect otomatis sesuai role/permission atau Dashboard Siswa)
@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:Lihat daftar buku')
         ->name('buku.index');
 
-    // Pencarian buku diarahkan ke BukuController::cari (diperbaiki dengan query binding pada 2b)
     Route::get('/buku-cari', [BukuController::class, 'cari'])
         ->middleware('permission:Lihat daftar buku')
         ->name('buku.cari');
@@ -57,7 +56,7 @@ Route::middleware('auth')->group(function () {
         ->name('buku.show');
 
     // ==========================================
-    // 3. KELOLA DATA BUKU (Admin & Petugas via Gate)
+    // 3. KELOLA DATA BUKU (Hanya Admin & Petugas)
     // ==========================================
     Route::middleware('can:kelola-buku')->group(function () {
         Route::get('/kelola-buku', [BukuController::class, 'kelola'])->name('buku.kelola');
@@ -67,8 +66,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/buku/{id}', [BukuController::class, 'update'])->whereNumber('id')->name('buku.update');
         Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->whereNumber('id')->name('buku.destroy');
     });
-
-    // Route GET /buku/{buku}/hapus telah dihapus untuk menutup celah A3 (2c)
 
     // ==========================================
     // 4. MANAJEMEN PENGGUNA & ROLE (Admin Saja)
@@ -80,34 +77,28 @@ Route::middleware('auth')->group(function () {
     // ==========================================
     // 5. PEMINJAMAN & PENGEMBALIAN BUKU
     // ==========================================
-    // Pengajuan Peminjaman (Admin, Petugas, Siswa)
     Route::middleware('permission:Mengajukan peminjaman buku')->group(function () {
         Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
         Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
     });
 
-    // Riwayat Peminjaman Pribadi (Admin, Petugas, Siswa)
     Route::get('/riwayat-peminjaman', [PeminjamanController::class, 'riwayatSaya'])
         ->middleware('permission:Melihat riwayat peminjaman sendiri')
         ->name('peminjaman.riwayat');
 
-    // Detail Peminjaman (Proteksi data pribadi berbasis identitas)
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])
         ->whereNumber('id')
         ->name('peminjaman.show');
 
-    // Kelola Transaksi Peminjaman (Admin & Petugas)
     Route::middleware('permission:Kelola peminjaman')->group(function () {
         Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
     });
 
-    // Persetujuan Peminjaman (Admin & Petugas)
     Route::middleware('permission:Memproses persetujuan peminjaman')->group(function () {
         Route::post('/peminjaman/{id}/setujui', [PeminjamanController::class, 'setujui'])->whereNumber('id')->name('peminjaman.setujui');
         Route::post('/peminjaman/{id}/tolak', [PeminjamanController::class, 'tolak'])->whereNumber('id')->name('peminjaman.tolak');
     });
 
-    // Pengembalian Buku (Admin & Petugas)
     Route::middleware('permission:Mencatat pengembalian buku')->group(function () {
         Route::post('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'kembalikan'])->whereNumber('id')->name('peminjaman.kembalikan');
     });
@@ -134,5 +125,4 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-// Memuat rute autentikasi bawaan (login, register, forgot-password, dll dari Laravel Breeze/Jetstream)
 require __DIR__.'/auth.php';
