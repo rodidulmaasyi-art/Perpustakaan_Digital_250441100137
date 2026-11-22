@@ -78,7 +78,7 @@ class BukuController extends Controller
     }
 
     /**
-     * Simpan buku baru
+     * Simpan buku baru lalu kembali ke halaman Katalog (buku.index)
      */
     public function store(Request $request): RedirectResponse
     {
@@ -91,7 +91,7 @@ class BukuController extends Controller
 
         Buku::create($validated);
 
-        return redirect()->route('buku.kelola')->with('success', 'Buku baru berhasil ditambahkan.');
+        return redirect()->route('buku.index')->with('success', 'Buku baru berhasil ditambahkan.');
     }
 
     /**
